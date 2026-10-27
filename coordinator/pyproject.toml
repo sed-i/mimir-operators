@@ -8,6 +8,7 @@ requires-python = "~=3.14.0"
 dependencies = [
   "coordinated-workers>=4.1.0",
   "charmed-service-mesh-helpers>=0.2.0",
+  "canonical-service-mesh",
   "lightkube-extensions",
   "cosl",
   "pydantic>=2",
