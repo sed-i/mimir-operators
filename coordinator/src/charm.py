@@ -18,6 +18,8 @@ from urllib.parse import urlparse
 
 import ops
 import yaml
+from canonical_service_mesh.enums import MeshType as CanonicalMeshType
+from canonical_service_mesh.k8s.resource_manager import PolicyResourceManager
 from charmlibs.nginx_k8s import NginxConfig, TLSConfigManager
 from charms.alertmanager_k8s.v1.alertmanager_dispatch import AlertmanagerConsumer
 from charms.catalogue_k8s.v1.catalogue import CatalogueItem
@@ -27,7 +29,6 @@ from charms.istio_beacon_k8s.v0.service_mesh import (
     Endpoint,
     MeshPolicy,
     Method,
-    PolicyResourceManager,
     PolicyTargetType,
     UnitPolicy,
 )
@@ -429,7 +430,7 @@ class MimirCoordinatorK8SOperatorCharm(ops.CharmBase):
                 len(policies),
                 mesh_type,
             )
-            prm.reconcile(policies, mesh_type)
+            prm.reconcile(policies, CanonicalMeshType(mesh_type.value))
         else:
             # No active service-mesh relation: clean up any policies we previously created.
             prm.delete()
